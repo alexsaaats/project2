@@ -1,0 +1,158 @@
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('saaatsmini', 'root', 'Test101!', {
+  host: 'localhost',
+  dialect: 'mysql',
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
+  operatorsAliases: false
+});
+
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'Test101!',
+  database : 'saaatsmini'
+});
+
+
+// Define sequelize model for the URLs
+const siteURL = sequelize.define('siteurl', {
+  URLid: Sequelize.INTEGER,
+  URL: Sequelize.STRING
+})
+
+//Verify the sequelize connection
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection to Database has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
+destroyrows();
+
+
+
+//VARIABLES -------------------------------------------------------------
+const SitemapGenerator = require('sitemap-generator');
+var xml2js = require('xml2js');
+var fs = require('fs');
+var moment = require('moment');
+
+
+var xmlfile = "/sitemap.xml";
+var site = "http://saaats.com";
+
+
+
+//MAIN FUNCTION --------------------------------------------------------
+/*
+$("#submit-site").click(function() {
+	// Prevent default behavior of form submit
+	event.preventDefault();
+
+	site = $("#site-name").val().trim(); */
+
+	// create generator
+	console.log("Crawler started. Rewriting sitemap.xml for " + site + ". Please note that for large sites this can take many minutes...");
+	var start = moment().format();
+	console.log("Crawler started at " + start);
+	const generator = SitemapGenerator(site, {
+	  stripQuerystring: false
+	});
+
+	//var results = getPaths();
+
+	// register event listeners
+	generator.on('done', () => {
+	  // sitemaps created
+	  console.log("Crawler is done");
+	  //console.log("Paths: " + results);
+	  console.log("OUTPUT XML FILE: " + generator.getPaths());
+	  console.log("OUTPUT -- Pages Added: " + generator.getStats().added);
+	  console.log("OUTPUT -- Pages Ignored: " + generator.getStats().ignored);
+	  console.log("OUTPUT -- Pages Errored: " + generator.getStats().errored);
+	  crawldone();
+	  
+	});
+
+	// start the crawler
+	generator.start();
+
+/*
+//close the submit function
+});
+*/
+
+
+
+//CRAWL COMPLETE WRITE TO DB AND CONSOLE -------------------------------------------
+
+function crawldone() {
+var parser = new xml2js.Parser();
+fs.readFile(__dirname + xmlfile, function(err, data) {
+    parser.parseString(data, function (err, result) {
+        console.log('XML Parser Done');
+        // This shows the raw XML results -- console.dir(result);
+
+        for (i = 0; i < generator.getStats().added; i++) {
+        	console.log("URL(" + i + "): " + result.urlset.url[i].loc);
+        	var newurl = result.urlset.url[i].loc[0]
+        	console.log(newurl);
+        	//destroy any existing row
+        	
+        	//var siteurl = siteURL.destroy({ where: { id: [i] }});
+        	//rebuild the row
+        	var siteurl = siteURL.build({id: i+1, URLid: i+1, URL: newurl})
+        	//save to db
+			siteurl.save().then(() => {
+			  // callbackactions
+			  console.log("Item saved to DB")
+			})
+			siteurl.save().catch(error => {
+			  // mhhh, wth!
+			})
+			
+        }
+        
+        var end = moment().format();
+  		console.log("Crawler and parsing completed at " + end);
+
+        
+    });
+});
+
+};
+
+
+//DESTROY ROWS ---------------------------------------------------
+function destroyrows() {
+
+	connection.connect();
+	var rowcount = 0;
+	 
+	connection.query('SELECT count(*) FROM siteurls;', function (error, results, fields) {
+	  if (error) throw error;
+	  console.log('The solution is: ', results);
+	  rowcount = results[0]['count(*)'];
+	  console.log('The rowcount is: ' + rowcount);
+
+	  for (i=0; i < (rowcount + 1); i++) {
+		var siteurl = siteURL.destroy({ where: { id: [i] }});
+		console.log("ROW DESTROYED! BOOM!");
+		}
+
+	});
+	 
+	connection.end();
+
+
+
+}

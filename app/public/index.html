@@ -1,0 +1,137 @@
+
+<html>
+
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>SAAATS Advanced Monitoring</title>
+  <!-- CSS reset sheet --> 
+  <!-- <link rel="stylesheet" type="text/css" href="assets/CSS/reset.css"> -->
+  <!-- current version of bootstrap --> 
+  <!-- <link rel=“stylesheet” href=“https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css” integrity=“sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ” crossorigin=“anonymous”> -->
+  <!-- themed bootstrap sheet --> 
+  <!-- link rel="stylesheet" type="text/css" href="https://bootswatch.com/spacelab/bootstrap.min.css"> -->
+  <!-- my stylesheet -->
+  <!-- <link rel="stylesheet" type="text/css" href="assets/CSS/style.css"> --> 
+  <!-- adding in jquery --> 
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+  <!-- adding in bootstrap js -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <!-- my js game file -->
+  <!-- <script src="assets/javascript/app.js"></script> -->
+  <script src="/createsitemap"></script>
+  <!-- Icons file -->
+  <script src="https://use.fontawesome.com/c8b6d2fc87.js"></script>
+  <!-- Moment.js -->
+  <!-- <script src="app/public/assets/javascript/moment.js"></script> -->
+
+  <!-- Semantic UI --> 
+  <link rel="stylesheet" type="text/css" href="/css">
+	<script
+	  src="https://code.jquery.com/jquery-3.1.1.min.js"
+	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	  crossorigin="anonymous"></script>
+	<script src="/cssjs"></script>
+	<script src='/app/public/assets/javascript/handlebars-v4.0.11.js'></script>
+	<!-- script src="/menujs"></script> -->
+
+    <!-- Script to drive the dropdown menus --> 
+	<script>
+	  $(document)
+	    .ready(function() {
+	      $('.ui.selection.dropdown').dropdown();
+	      $('.ui.menu .ui.dropdown').dropdown({
+	        on: 'hover'
+	      });
+	    })
+	  ;
+	</script>
+
+</head>
+
+
+
+<body>
+
+	<div class="ui top attached menu">
+	  <!-- <div class="ui dropdown icon item">
+	    <i class="wrench icon"></i>
+	    <div class="menu">
+	      <div class="item">
+	        Add new Load
+	      </div>
+	      <div class="item">
+	        Load Import...
+	      </div>
+	      <div class="item">
+	      	Add new Carrier
+	      </div>
+	      <div class="item">
+	      	Carrier Import...
+	      </div>
+	      <div class="divider"></div>
+	      <div class="header">
+	        Export
+	      </div>
+	      <div class="item">
+	        Share...
+	      </div>
+	    </div>
+	  </div> -->
+
+	  <div class="item">
+	    <h3>SAAATS Advanced Monitoring</h3>
+	  </div>
+
+	  <div class="right menu">
+	  	
+	    <!-- <div class="ui right aligned category search item">
+	      <div class="ui transparent icon input">
+	        <input class="prompt" type="text" placeholder="Search SAAATS">
+	        <i class="search link icon"></i>
+	      </div>
+	      <div class="results"></div>
+	    </div> --> 
+  	  </div>
+</div>
+
+<div class="ui container" style="padding-top:15px; padding-bottom:150px;">
+
+		<form class="ui form">
+		  <div class="field" >
+		    <label>Website Base URL (for example, saaats.com)</label>
+		    <input type="text" name="first-name" placeholder="mysite.com" id="site-name">
+		  </div>
+		  
+		  <!-- <button class="ui button" type="submit">Submit</button> -->
+		  <div class="ui animated button" tabindex="0" type="submit" id="submit-site">
+  			<div class="visible content">Scan this site</div>
+	  			<div class="hidden content">
+	    		<i class="right arrow icon"></i>
+	  			</div> 
+  			</div>
+		</form>
+
+	
+<div class="ui secondary pointing menu">
+  <a class="item active">
+    Scan Results
+  </a>
+  
+</div>
+<div class="ui segment" style="height:500px; text-align:center;" id="scan-results">
+  <h1>Scan a Site</h1>
+  <p>To see results, please go ahead and scan a site using the button above.</p>
+</div>
+</div>
+
+
+<div class="ui bottom attached segment">
+  <p><center>Copyright (C) 2017. Technology Operations Group LLC.</center></p>
+</div>
+
+
+</body>
+
+</html>
