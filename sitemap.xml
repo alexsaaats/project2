@@ -1,30 +1,90 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://saaats.com/</loc>
+    <loc>http://decycive.com/</loc>
   </url>
   <url>
-    <loc>http://saaats.com/product/</loc>
+    <loc>http://decycive.com/services/</loc>
   </url>
   <url>
-    <loc>http://saaats.com/projects/</loc>
+    <loc>http://decycive.com/about/</loc>
   </url>
   <url>
-    <loc>http://saaats.com/how-it-works/</loc>
+    <loc>http://decycive.com/contact-us/</loc>
   </url>
   <url>
-    <loc>http://saaats.com/how-it-works/video-tutorials/</loc>
+    <loc>http://decycive.com/blog/</loc>
   </url>
   <url>
-    <loc>http://saaats.com/how-it-works/faq/</loc>
+    <loc>http://decycive.com/about-alex-avendano/</loc>
   </url>
   <url>
-    <loc>http://saaats.com/get-help/</loc>
+    <loc>http://decycive.com/portfolio/</loc>
   </url>
   <url>
-    <loc>http://saaats.com/smb/</loc>
+    <loc>http://decycive.com/2015/10/02/seo-step2-creating-a-testing-model/</loc>
   </url>
   <url>
-    <loc>http://saaats.com/SMB/</loc>
+    <loc>http://decycive.com/author/admin/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/category/security/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/2015/10/04/nasa-space-shuttle/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/category/uncategorized/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/category/marketing-technology/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/2015/10/04/wordpress-security/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/category/wordpress/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/category/atlanta/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/2015/10/04/atdc-customer-discovery-lab/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/2015/10/02/seo-step1-planning/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/category/startups/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/portfolio/psd-business-card-mockup-vol4/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/portfolio/leather-logo-mock-up-template/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/portfolio/psd-business-card-mock-up-vol12/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/portfolio/psd-business-card-mock-up-vol15/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/portfolio/stationery-branding-mock-up-vol-4-2/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/portfolio/psd-business-card-mock-up-vol16/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/portfolio/print-logo-mock-up-template/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/portfolio/psd-business-card-mock-up-vol-1/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/portfolio/linen-logo-mock-up-template/</loc>
+  </url>
+  <url>
+    <loc>http://decycive.com/portfolio/stationery-branding-mock-up-vol-5/</loc>
   </url>
 </urlset>

@@ -48,7 +48,7 @@ var moment = require('moment');
 
 
 var xmlfile = "/sitemap.xml";
-var site = "http://saaats.com";
+var site = "http://decycive.com";
 
 
 
@@ -109,7 +109,7 @@ fs.readFile(__dirname + xmlfile, function(err, data) {
         	//destroy any existing row
         	
         	//var siteurl = siteURL.destroy({ where: { id: [i] }});
-        	//rebuild the row
+        	//build the row
         	var siteurl = siteURL.build({id: i+1, URLid: i+1, URL: newurl})
         	//save to db
 			siteurl.save().then(() => {
