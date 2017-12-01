@@ -23,7 +23,8 @@ var connection = mysql.createConnection({
 // Define sequelize model for the URLs
 const siteURL = sequelize.define('siteurl', {
   URLid: Sequelize.INTEGER,
-  URL: Sequelize.STRING
+  URL: Sequelize.STRING,
+  screenshotPath: Sequelize.STRING
 })
 
 //Verify the sequelize connection
@@ -36,7 +37,9 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
-destroyrows();
+
+
+//destroyrows();
 
 
 
@@ -48,7 +51,9 @@ var moment = require('moment');
 
 
 var xmlfile = "/sitemap.xml";
-var site = "http://decycive.com";
+//var site = require("./app/data/temp.js");
+//ar site = "http://nowaccount.com";
+
 
 
 
@@ -59,6 +64,10 @@ $("#submit-site").click(function() {
 	event.preventDefault();
 
 	site = $("#site-name").val().trim(); */
+
+exports.bigfunction = function(site) {
+	
+	destroyrows();
 
 	// create generator
 	console.log("Crawler started. Rewriting sitemap.xml for " + site + ". Please note that for large sites this can take many minutes...");
@@ -86,6 +95,80 @@ $("#submit-site").click(function() {
 	// start the crawler
 	generator.start();
 
+
+
+	//DESTROY ROWS ---------------------------------------------------
+	//exports.destroyrows = function(site) {
+
+	function destroyrows() {
+
+	connection.connect();
+	var rowcount = 0;
+	 
+	connection.query('SELECT count(*) FROM siteurls;', function (error, results, fields) {
+	  if (error) throw error;
+	  console.log('The solution is: ', results);
+	  rowcount = results[0]['count(*)'];
+	  console.log('The rowcount is: ' + rowcount);
+
+	  for (i=0; i < (rowcount + 1); i++) {
+	  	var iplus = i + 1;
+	  	/* fs.unlink('./app/public/screenshots/' + iplus + '.png', function(error) {
+		    if (error) {
+		        throw error;
+		    }
+		    console.log('FILE DELETED');
+		}); */
+	  	console.log(siteURL.screenshotPath)
+		var siteurl = siteURL.destroy({ where: { id: [i] }});
+		console.log("ROW DESTROYED! BOOM!");
+		}
+
+	});
+	 
+	connection.end();
+
+	}
+
+	//FUNCTION CRAWLER DONE
+	function crawldone() {
+	var parser = new xml2js.Parser();
+	fs.readFile(__dirname + xmlfile, function(err, data) {
+	    parser.parseString(data, function (err, result) {
+	    console.log('XML Parser Done');
+	       // This shows the raw XML results -- console.dir(result);
+
+	        for (i = 0; i < generator.getStats().added; i++) {
+	        	console.log("URL(" + i + "): " + result.urlset.url[i].loc);
+	        	var newurl = result.urlset.url[i].loc[0]
+	        	console.log(newurl);
+	        	//destroy any existing row
+	        	
+	        	//var siteurl = siteURL.destroy({ where: { id: [i] }});
+	        	//build the row
+	        	var siteurl = siteURL.build({id: i+1, URLid: i+1, URL: newurl})
+	        	//save to db
+				siteurl.save().then(() => {
+				  // callbackactions
+				  console.log("Item saved to DB")
+				})
+				siteurl.save().catch(error => {
+				  // mhhh, wth!
+				})
+				
+	        }
+	        
+	    var end = moment().format();
+		console.log("Crawler and parsing completed at " + end);
+	    });
+	});
+	};
+
+
+
+
+//CLOSE THE BIG FUNCTION	
+};
 /*
 //close the submit function
 });
@@ -95,7 +178,12 @@ $("#submit-site").click(function() {
 
 //CRAWL COMPLETE WRITE TO DB AND CONSOLE -------------------------------------------
 
-function crawldone() {
+exports.crawldone = function(site) {
+
+const generator = SitemapGenerator(site, {
+	  stripQuerystring: false
+	});
+
 var parser = new xml2js.Parser();
 fs.readFile(__dirname + xmlfile, function(err, data) {
     parser.parseString(data, function (err, result) {
@@ -133,7 +221,7 @@ fs.readFile(__dirname + xmlfile, function(err, data) {
 
 
 //DESTROY ROWS ---------------------------------------------------
-function destroyrows() {
+exports.destroyrows = function(site) {
 
 	connection.connect();
 	var rowcount = 0;
@@ -145,6 +233,14 @@ function destroyrows() {
 	  console.log('The rowcount is: ' + rowcount);
 
 	  for (i=0; i < (rowcount + 1); i++) {
+	  	var iplus = i + 1;
+	  	/* fs.unlink('./app/public/screenshots/' + iplus + '.png', function(error) {
+		    if (error) {
+		        throw error;
+		    }
+		    console.log('FILE DELETED');
+		}); */
+	  	console.log(siteURL.screenshotPath)
 		var siteurl = siteURL.destroy({ where: { id: [i] }});
 		console.log("ROW DESTROYED! BOOM!");
 		}
@@ -152,7 +248,5 @@ function destroyrows() {
 	});
 	 
 	connection.end();
-
-
 
 }

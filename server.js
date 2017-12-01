@@ -3,7 +3,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
-
+//var CreateSitemap = require("./createsitemap.js")
 
 // Sets up the Express App
 // =============================================================
@@ -17,33 +17,29 @@ app.listen(PORT, () => console.log('Saaats Mini app listening on port ' + PORT))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.post("/", function (req, res) {
+    console.log(req.body.baseurl)
+});
 
 
 //ROUTES =============================================================
 //Basic route that sends the user first to the AJAX Page
 app.use('/static', express.static('app/public'));
 
+//Get controllers for other routes
+require("./app/controllers/apiController")(app);
+//require("./routes/htmlRoutes")(app);
+
+
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "/app/public/index.html"));
   console.log("homepage loaded");
 });
 
-app.get("/css", function(req, res) {
-  res.sendFile(path.join(__dirname, "/app/public/assets/semantic/semantic.min.css"));
-  console.log("css loaded");
+/*
+app.post("/newsitemap", function (req, res) {
+    console.log(req.body.baseurl)
+
 });
 
-app.get("/cssjs", function(req, res) {
-  res.sendFile(path.join(__dirname, "/app/public/assets/semantic/semantic.min.js"));
-  console.log("css JS loaded");
-});
-
-app.get("/menujs", function(req, res) {
-  res.sendFile(path.join(__dirname, "/app/public/assets/javascript/menu.js"));
-  console.log("menu JS loaded");
-});
-
-app.get("/createsitemap", function(req, res) {
-  res.sendFile(path.join(__dirname, "/app/public/assets/javascript/createsitemap.js"));
-  console.log("createsitemap.js loaded");
-});
+*/

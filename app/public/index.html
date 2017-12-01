@@ -1,39 +1,31 @@
-
+<DOC
 <html>
-
 
 <head>
 
   <meta charset="UTF-8">
   <title>SAAATS Advanced Monitoring</title>
-  <!-- CSS reset sheet --> 
-  <!-- <link rel="stylesheet" type="text/css" href="assets/CSS/reset.css"> -->
-  <!-- current version of bootstrap --> 
-  <!-- <link rel=“stylesheet” href=“https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css” integrity=“sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ” crossorigin=“anonymous”> -->
-  <!-- themed bootstrap sheet --> 
-  <!-- link rel="stylesheet" type="text/css" href="https://bootswatch.com/spacelab/bootstrap.min.css"> -->
-  <!-- my stylesheet -->
-  <!-- <link rel="stylesheet" type="text/css" href="assets/CSS/style.css"> --> 
+
   <!-- adding in jquery --> 
   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
-  <!-- adding in bootstrap js -->
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-  <!-- my js game file -->
-  <!-- <script src="assets/javascript/app.js"></script> -->
-  <script src="/createsitemap"></script>
+  <!-- adding in jquery validation --> 
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+  
   <!-- Icons file -->
   <script src="https://use.fontawesome.com/c8b6d2fc87.js"></script>
-  <!-- Moment.js -->
-  <!-- <script src="app/public/assets/javascript/moment.js"></script> -->
+
+  <!-- Handlebars JS file -->
+  <script src='/static/assets/javascript/handlebars-v4.0.11.js'></script>
+  <script src='/static/assets/javascript/handlebars-templates.js'></script>
 
   <!-- Semantic UI --> 
-  <link rel="stylesheet" type="text/css" href="/css">
+  <link rel="stylesheet" type="text/css" href="/static/assets/semantic/semantic.min.css">
 	<script
 	  src="https://code.jquery.com/jquery-3.1.1.min.js"
 	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 	  crossorigin="anonymous"></script>
-	<script src="/cssjs"></script>
-	<script src='/app/public/assets/javascript/handlebars-v4.0.11.js'></script>
+	<script src="/static/assets/semantic/semantic.min.js"></script>
+	
 	<!-- script src="/menujs"></script> -->
 
     <!-- Script to drive the dropdown menus --> 
@@ -55,30 +47,15 @@
 <body>
 
 	<div class="ui top attached menu">
-	  <!-- <div class="ui dropdown icon item">
+	  <div class="ui dropdown icon item">
 	    <i class="wrench icon"></i>
 	    <div class="menu">
 	      <div class="item">
-	        Add new Load
+	        Visit Saaats.com
 	      </div>
-	      <div class="item">
-	        Load Import...
-	      </div>
-	      <div class="item">
-	      	Add new Carrier
-	      </div>
-	      <div class="item">
-	      	Carrier Import...
-	      </div>
-	      <div class="divider"></div>
-	      <div class="header">
-	        Export
-	      </div>
-	      <div class="item">
-	        Share...
-	      </div>
+	      
 	    </div>
-	  </div> -->
+	  </div>
 
 	  <div class="item">
 	    <h3>SAAATS Advanced Monitoring</h3>
@@ -86,22 +63,22 @@
 
 	  <div class="right menu">
 	  	
-	    <!-- <div class="ui right aligned category search item">
+	   <div class="ui right aligned category search item">
 	      <div class="ui transparent icon input">
 	        <input class="prompt" type="text" placeholder="Search SAAATS">
 	        <i class="search link icon"></i>
 	      </div>
 	      <div class="results"></div>
-	    </div> --> 
+	    </div>
   	  </div>
 </div>
 
 <div class="ui container" style="padding-top:15px; padding-bottom:150px;">
 
-		<form class="ui form">
+		<form method="post" class="ui form" id="niceform">
 		  <div class="field" >
 		    <label>Website Base URL (for example, saaats.com)</label>
-		    <input type="text" name="first-name" placeholder="mysite.com" id="site-name">
+		    <input type="url" name="niceurl" placeholder="mysite.com" id="niceurl">
 		  </div>
 		  
 		  <!-- <button class="ui button" type="submit">Submit</button> -->
@@ -110,19 +87,100 @@
 	  			<div class="hidden content">
 	    		<i class="right arrow icon"></i>
 	  			</div> 
-  			</div>
+  		  </div>
 		</form>
+		<!--
+		<form method="post" id="simpleform"  name="simpleform">
+    	<input name="baseurl" id="site-name" type="url">
+    	<input type="submit" value="SEND SITE" id="submit">
+		</form>
+	-->
+		<script>
+			/*
+		$(function() {
+				$("form[name='simpleform']").validate({
+				rules: {
+					baseurl: {
+   						required: true,
+        				url: true
+      				},
+      			},
+      			messages: {
+      				baseurl: "Please enter a valid URL."
+      			}
+      			});
+
+      			submitHandler: function(form) {
+      			form.submit();
+      			};
+		} */
+		</script>
+
+		
+		
+
+	<!-- JQUERY TO PASS -->
+	<script type="text/javascript">
+	    // Send form entry to controller
+	    $("#submit-site").on("click", function(event) {
+	      event.preventDefault();
+
+	      var newSite = {
+	        siteurl: $("#niceurl").val().trim()
+	      };
+	      console.log(newSite);
+
+	      // POST form data
+	      $.post("/api/createsitemap", newSite,
+	        function(data) {
+	          // Log if there is a response from the call
+	          console.log("CLIENT SAYS: I got a response from Node.")
+	          // Clear the form when submitting
+	          $("#niceurl").val("");
+	        });
+
+	    });
+
+	</script>
 
 	
 <div class="ui secondary pointing menu">
   <a class="item active">
     Scan Results
   </a>
-  
 </div>
+
+<!-- MAIN CONTENT DIV -->
 <div class="ui segment" style="height:500px; text-align:center;" id="scan-results">
-  <h1>Scan a Site</h1>
-  <p>To see results, please go ahead and scan a site using the button above.</p>
+
+
+
+<!-- HANDLEBARSSSSS   -->
+<script id="address-template" type="text/x-handlebars-template">
+  <p>You can find me in {{city}}. My address is {{number}} {{street}}.</p>
+</script>
+
+<script id="expressions-template" type="text/x-handlebars-template">
+  {{description.escaped}}
+  {{example}}
+
+  <br><br>
+
+  {{description.unescaped}}
+  {{{example}}}
+</script>
+
+
+<!--Your new content will be displayed in here-->
+<div class="content-placeholder1"></div>
+
+<div class="content-placeholder2"></div>
+
+
+
+
+
+
 </div>
 </div>
 

@@ -27,7 +27,8 @@ var connection = mysql.createConnection({
 // Define sequelize model for the URLs
 const siteURL = sequelize.define('siteurl', {
   URLid: Sequelize.INTEGER,
-  URL: Sequelize.STRING
+  URL: Sequelize.STRING,
+  screenshotPath: Sequelize.STRING
 })
 
 
@@ -37,7 +38,30 @@ var urllist = [];
 var pageurl = 'http://google.com';
 var pathname = 'test';
 
-createUrlList();
+var urllist = [];
+var newlist = [];
+
+//GET DB URL LIST ----------------------
+connection.connect();
+	 
+	connection.query('SELECT URL FROM siteurls;', function (error, results, fields) {
+	  if (error) throw error;
+	  urllist = results;
+	  var count = urllist.length;
+	  console.log("COUNT: " + count);
+	  loopArray(urllist);
+	});
+
+
+
+
+
+
+
+
+//FUNCITON CALLS
+
+//createUrlList();
 
 
 //VIEW HEADER RESPONSE IF NEEDED --------------------------------------------
@@ -50,6 +74,7 @@ request
   });
 */
 
+/*
 function seqget() {
 	var urllist1 = 
 	siteURL.findAll({
@@ -57,9 +82,10 @@ function seqget() {
 	});
 	console.log(urllist1);
 }
+*/
 
 //CREATE SCREENSHOTS FOR ALL URLs ---------------------------------------------------
-function createUrlList() {
+/*function createUrlList() {
 
 	connection.connect();
 		 
@@ -93,6 +119,7 @@ function createUrlList() {
 	connection.end();
 
 };
+*/
 
 
 
@@ -108,3 +135,48 @@ request.get('https://screen.rip/capture?token=' + token + '&url=' + pageurl, fun
 	}
 });
 */
+
+var x = 0;
+function loopArray(arr) { 
+
+    LogSaveStatusCode(arr[x],function(){
+        // set x to next item
+        x++;
+
+        // any more items in array? continue loop
+        if(x < arr.length) {
+            loopArray(arr);   
+        }    else {
+            	connection.end();
+            	console.log(newlist);
+            }
+        
+    }); 
+    
+}
+
+function LogSaveStatusCode (msg,callback) {
+    //This code updates the list of URLs processed, and then calls for status on each url. Once complete, it moves to next item. 
+
+    //console.log(msg);
+    //console.log(msg.URL);
+    newlist.push(msg.URL);
+    var curcount = newlist.length
+    var pathname = curcount
+
+		request.get('https://screen.rip/capture?token=' + token + '&url=' + msg.URL, function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+		    data = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64');
+		    //console.log(data);
+			    base64Img.img(data, './app/public/screenshots', pathname, function(err, filepath) {
+			    console.log('FILEPATH: ' + filepath)
+			    siteURL.update({screenshotPath: filepath,}, {where: {id: curcount } });
+			    });
+			}
+		});
+	  
+
+    // do callback when ready
+    callback();
+};
+
