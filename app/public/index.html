@@ -29,20 +29,9 @@
 	<!-- script src="/menujs"></script> -->
 
     <!-- Script to drive the dropdown menus --> 
-	<script>
-	  $(document)
-	    .ready(function() {
-	      $('.ui.selection.dropdown').dropdown();
-	      $('.ui.menu .ui.dropdown').dropdown({
-	        on: 'hover'
-	      });
-	    });
 
-	$.getJSON( "/api/getUrls", function( data ) {
-  console.log(data);
-});
-	    
-	</script>
+
+	
 
 </head>
 
@@ -95,7 +84,7 @@
 
 		  
 		  <!-- <button class="ui button" type="submit">Submit</button> -->
-		  <div class="ui animated button ui submit button" tabindex="0" type="submit" id="submit-site1" onclick="sitesubmit()">
+		  <div class="ui animated button ui submit button" tabindex="0" type="submit" id="submit-site1" onclick="document.sitesubmit()">
   			<div class="visible content">Scan this site</div>
 	  			<div class="hidden content">
 	    		<i class="right arrow icon"></i>
@@ -135,88 +124,6 @@
 		</div>
 		
 		
-
-	<!-- JQUERY TO PASS -->
-	<script type="text/javascript">
-
-		$("#getstatus").on("click", function(event) {
-	      //event.preventDefault();
-	      $.getJSON( "/api/checkstatus", function( data ) {
-  			console.log(data);
-			});
-	      $('.segment').dimmer('show');
-	   });
-
-		$("#getscreenshots").on("click", function(event) {
-	      event.preventDefault();
-	      $.getJSON( "/api/getscreenshots", function( data ) {
-  			console.log(data);
-			});
-	   });
-
-		$("#learnmore").on("click", function(event) {
-	      $('.ui.basic.modal')
-  			.modal('show');
-	   });
-
-		$('.ui form')
-			  .form({
-			  	on: 'blur',
-			    fields: {
-			      niceurl: {
-			      	rules: [
-			      	{
-			      	type   : 'url',
-            		prompt : 'You must enter a fully qualified site address, like http://saaats.com'
-          				}
-			      	]  }	}  }); 
-
-		$('.message .close')
-  			.on('click', function() {
-    		$(this)
-      		.closest('.message')
-      		.transition('fade')
-  			});
-
-		function sitesubmit() {
-			var sitepath = $("#niceurl").val().trim()
-			if (document.getElementById("niceurl").validity.typeMismatch) {
-				console.log("TYPE MISMATCH VALIDATION FAIL")
-				$("div.negative").toggleClass("hidden");
-			}
-				else {
-
-					var newSite = {
-	        		siteurl: $("#niceurl").val().trim()
-	      			};
-	      			console.log(newSite);
-
-	      			// POST form data
-	      			$.post("/api/createsitemap", newSite,
-	        		function(data) {
-	          		// Log if there is a response from the call
-	          		console.log("CLIENT SAYS: I got a response from Node.")
-	          		// Clear the form when submitting
-	          		$("#niceurl").val("");
-	        		});
-
-	        		//Turn on the wait message
-	      			$("div.icon").toggleClass("hidden");
-	      			$("div.input").toggleClass("disabled");
-
-	      			
-				}
-		};
-	      
-
-	    // Send form entry to controller
-	    $("#submit-site").on("click", function(event) {
-	      event.preventDefault();
-
-
-	   });
-	      
-	</script>
 
 	
 <div class="ui secondary pointing menu">
@@ -293,6 +200,105 @@
 <div class="ui bottom attached segment">
   <p><center>Copyright (C) 2017. Saaats LLC.</center></p>
 </div>
+
+	<!-- JQUERY TO PASS -->
+	<script type="text/javascript">
+ $(document)
+	    .ready(function() {
+		
+	      $('.ui.selection.dropdown').dropdown();
+	      $('.ui.menu .ui.dropdown').dropdown({
+	        on: 'hover'
+	      });
+	   
+
+	$.getJSON( "/api/getUrls", function( data ) {
+  console.log(data);
+});
+
+		$("#getstatus").on("click", function(event) {
+	      //event.preventDefault();
+	      $.getJSON( "/api/checkstatus", function( data ) {
+  			console.log(data);
+			});
+	      $('.segment').dimmer('show');
+	   });
+
+		$("#getscreenshots").on("click", function(event) {
+	      event.preventDefault();
+	      $.getJSON( "/api/getscreenshots", function( data ) {
+  			console.log(data);
+			});
+	   });
+
+		$("#learnmore").on("click", function(event) {
+	      $('.ui.basic.modal')
+  			.modal('show');
+	   });
+
+		$('.ui form')
+			  .form({
+			  	on: 'blur',
+			    fields: {
+			      niceurl: {
+			      	rules: [
+			      	{
+			      	type   : 'url',
+            		prompt : 'You must enter a fully qualified site address, like http://saaats.com'
+          				}
+			      	]  }	}  }); 
+
+		$('.message .close')
+  			.on('click', function() {
+    		$(this)
+      		.closest('.message')
+      		.transition('fade')
+  			});
+
+		
+
+	    // Send form entry to controller
+	    $("#submit-site").on("click", function(event) {
+	      event.preventDefault();
+
+
+	   });
+
+	});
+
+	    function sitesubmit() {
+			var sitepath = $("#niceurl").val().trim()
+			if (document.getElementById("niceurl").validity.typeMismatch) {
+				console.log("TYPE MISMATCH VALIDATION FAIL")
+				$("div.negative").toggleClass("hidden");
+			}
+				else {
+
+					var newSite = {
+	        		siteurl: $("#niceurl").val().trim()
+	      			};
+	      			console.log(newSite);
+
+	      			// POST form data
+	      			$.post("/api/createsitemap", newSite,
+	        		function(data) {
+	          		// Log if there is a response from the call
+	          		console.log("CLIENT SAYS: I got a response from Node.")
+	          		// Clear the form when submitting
+	          		$("#niceurl").val("");
+	        		});
+
+	        		//Turn on the wait message
+	      			$("div.icon").toggleClass("hidden");
+	      			$("div.input").toggleClass("disabled");
+
+	      			
+				}
+		};
+	      
+
+	      
+	</script>
 
 
 </body>
