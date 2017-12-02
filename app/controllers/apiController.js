@@ -51,7 +51,7 @@ module.exports = function(app) {
     sitemapper.bigfunction(req.body.siteurl);
 
     //Send a response
-    //res.send('POST request to the homepage')
+    res.send('POST request to the homepage')
   });
 
 };
