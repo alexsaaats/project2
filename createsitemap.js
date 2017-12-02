@@ -66,13 +66,15 @@ $("#submit-site").click(function() {
 	site = $("#site-name").val().trim(); */
 
 exports.bigfunction = function(site) {
+
+	
 	
 	destroyrows();
 
 	// create generator
-	console.log("Crawler started. Rewriting sitemap.xml for " + site + ". Please note that for large sites this can take many minutes...");
+	var log1 = "Crawler started. Rewriting sitemap.xml for " + site + ". Please note that for large sites this can take many minutes..."
 	var start = moment().format();
-	console.log("Crawler started at " + start);
+	var log2 =console.log("Crawler started at " + start);
 	const generator = SitemapGenerator(site, {
 	  stripQuerystring: false
 	});
@@ -102,6 +104,12 @@ exports.bigfunction = function(site) {
 
 	function destroyrows() {
 
+	const siteURL = sequelize.define('siteurl', {
+    URLid: Sequelize.INTEGER,
+    URL: Sequelize.STRING,
+    screenshotPath: Sequelize.STRING
+	})
+
 	connection.connect();
 	var rowcount = 0;
 	 
@@ -126,7 +134,7 @@ exports.bigfunction = function(site) {
 
 	});
 	 
-	connection.end();
+	//connection.end();
 
 	}
 
@@ -164,7 +172,7 @@ exports.bigfunction = function(site) {
 	});
 	};
 
-
+//module.exports = log1
 
 
 //CLOSE THE BIG FUNCTION	
@@ -247,6 +255,6 @@ exports.destroyrows = function(site) {
 
 	});
 	 
-	connection.end();
+	//connection.end();
 
 }

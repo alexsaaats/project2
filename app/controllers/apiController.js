@@ -1,6 +1,10 @@
 //var tableData = require("../data/tableData");
 //var waitListData = require("../data/waitinglistData");
 var sitemapper = require("../../createsitemap");
+var getdata = require("../models/getUrls");
+var runstatuscheck = require("../../checkstatus");
+var runscreenshots = require("../../getscreenshot");
+
 
 // ===============================================================================
 // ROUTING
@@ -18,12 +22,21 @@ module.exports = function(app) {
 
   app.get("/api/getscreenshots", function(req, res) {
     //res.json(waitListData);
+    console.log(runscreenshots);
     console.log("You have hit the /api/getscreenshots endpiont. PLEASE TRY AGAIN. ")
   });
 
   app.get("/api/checkstatus", function(req, res) {
-    res.json(waitListData);
+    //res.json(waitListData);
+    console.log(runstatuscheck);
     console.log("You have hit the /api/checkstatus endpoint. PLEASE TRY AGAIN. ")
+  });
+
+
+  app.get("/api/getUrls", function(req, res) {
+    res.json(getdata);
+    console.log("LOG FROM apiController, here is my URL info: " + getdata);
+    console.log("LOG FROM apiController, You have hit the /api/getUrls endpoint.")
   });
 
 
@@ -37,9 +50,8 @@ module.exports = function(app) {
     console.log("-------------------------------------------------------------------" );
     sitemapper.bigfunction(req.body.siteurl);
 
-
     //Send a response
-    res.json(false);
+    //res.send('POST request to the homepage')
   });
 
 };

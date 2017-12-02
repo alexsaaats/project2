@@ -2,52 +2,72 @@
 $( document ).ready(function() {
     console.log( "Handlebars-templates is ready" );
 
+$.getJSON( "/api/getUrls", function( data ) {
+  console.log(data);
 
-//FIRST TEMPLATE ENGINE - --------------------------------------------
+  //BUILD TABLE
+var source = $("#table-template").html(); 
+var template = Handlebars.compile(source); 
+
+var dataset = data;
+
+$('.urltable').append(template(dataset)); 
+
+console.log("TESTING --- site name is: " + dataset.urllist[0].URL);
+
+
+//urls-table ENGINE - --------------------------------------------
+function compiletable() {
+  // Grab the template script
+  var urlstable = $("#urls-table").html();
+
+  // Compile the template
+  var tablecompiled = Handlebars.compile(urlstable);
+
+  // Define our data object
+  var context={
+    "urls": {
+      "URLid": "URLid here",
+      "URL": "URL here",
+      "statusCode": "status here",
+      "ScreenshotPath": "path here",
+      "Action": "BUTTON"
+    },
+  };
+
+  // Pass our data to the template
+  var tabledata = tablecompiled(context);
+
+  // Add the compiled html to the page
+  $('.content-placeholder1').html(tabledata);
+
+  };
+
+
+
+//Show the SITENAME variable - --------------------------------------------
 
   // Grab the template script
-  var theTemplateScript1 = $("#address-template").html();
+  var sitename = $("#sitename").html();
 
   // Compile the template
-  var theTemplate1 = Handlebars.compile(theTemplateScript1);
+  var sitenamecompiled = Handlebars.compile(sitename);
 
   // Define our data object
   var context={
-    "city": "London",
-    "street": "Baker Street",
-    "number": "221B"
-  };
+    "sitename": dataset.urllist[0].URL
+    };
 
   // Pass our data to the template
-  var theCompiledHtml = theTemplate1(context);
+  var sitenamedata = sitenamecompiled(context);
 
   // Add the compiled html to the page
-  $('.content-placeholder1').html(theCompiledHtml);
+  $('.currentname').html("<h2>Current sitemap: " + sitenamedata + "</h2><br/>");
 
 
 
-//SECOND TEMPLATE ENGINE - --------------------------------------------
-// Grab the template script
-  var theTemplateScript2 = $("#expressions-template").html();
-
-  // Compile the template
-  var theTemplate2 = Handlebars.compile(theTemplateScript2);
-
-  // Define our data object
-  var context={
-    "description": {
-      "escaped": "Using {{}} brackets will result in escaped HTML:",
-      "unescaped": "Using {{{}}} will leave the context as it is:"
-    },
-    "example": "<button> Hello </button>"
-  };
-
-  // Pass our data to the template
-  var theCompiledHtml = theTemplate2(context);
-
-  // Add the compiled html to the page
-  $('.content-placeholder2').html(theCompiledHtml);
-
+//END the GET function
+});
 
 
 
