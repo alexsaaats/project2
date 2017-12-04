@@ -3,6 +3,8 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
+var startconnections = require("./app/models/startconnections.js");
+
 //var CreateSitemap = require("./createsitemap.js")
 
 // Sets up the Express App

@@ -2,15 +2,15 @@
 const request = require("request");
 
 const mysql      = require('mysql');
-const connection = mysql.createConnection({
+/*const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'Test101!',
   database : 'saaatsmini'
-});
+});*/
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('saaatsmini', 'root', 'Test101!', {
+/* const sequelize = new Sequelize('saaatsmini', 'root', 'Test101!', {
   host: 'localhost',
   dialect: 'mysql',
   pool: {
@@ -20,7 +20,7 @@ const sequelize = new Sequelize('saaatsmini', 'root', 'Test101!', {
     idle: 10000
   },
   operatorsAliases: false
-});
+}); */
 
 // Define sequelize model for the URLs
 const siteCode = sequelize.define('siteurls', {

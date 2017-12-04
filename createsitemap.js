@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('saaatsmini', 'root', 'Test101!', {
+/*const sequelize = new Sequelize('saaatsmini', 'root', 'Test101!', {
   host: 'localhost',
   dialect: 'mysql',
   pool: {
@@ -9,33 +9,33 @@ const sequelize = new Sequelize('saaatsmini', 'root', 'Test101!', {
     idle: 10000
   },
   operatorsAliases: false
-});
+}); */
 
 var mysql      = require('mysql');
-var connection = mysql.createConnection({
+/* var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'Test101!',
   database : 'saaatsmini'
-});
+}); */
 
 
 // Define sequelize model for the URLs
-const siteURL = sequelize.define('siteurl', {
+const siteURL = Sequelize.define('siteurl', {
   URLid: Sequelize.INTEGER,
   URL: Sequelize.STRING,
   screenshotPath: Sequelize.STRING
 })
 
 //Verify the sequelize connection
-sequelize
+/*sequelize
   .authenticate()
   .then(() => {
     console.log('Connection to Database has been established successfully.');
   })
   .catch(err => {
     console.error('Unable to connect to the database:', err);
-  });
+  }); */
 
 
 
